@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>D3: Setting path fills dynamically to generate a choropleth</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>
+    <style>
+              body {
+        background: #fcfcfa;
+        color: #333;
+        font-family: 'Catamaran', sans-serif;
+        margin: 1em auto 4em auto;
+        position: relative;
+        width: 1500px;
+        text-align: center;
+        }  
+        .wrapper{
+          display: grid;
+          align-items: center;
+        }
+        .one{
+          grid-column: 1;
+          grid-row: 1;
+          border-right: 1px solid #dfdfdf;
+        }
+        .two{
+          grid-column: 1;
+          grid-row: 2;
+          border-right: 1px solid #dfdfdf;
+        }
+        .three{
+          grid-column: 2;
+          grid-row: 1;
+        }
+        .four{
+          grid-column: 2;
+          grid-row:2;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Business Formation Statistics by State </h1>
+    <p>The Business Formation Statistics (BFS) measure business initiation activity and the cycle from initiation to realized business formation. BFS data is acquired by reviewing Employer Identification Number applications made on IRS Form SS-4, this provides an early look at business formation activity within the U.S.</p>
+    <p>Shown here are the High-Propensity Business Applications, a subset of applications that contains all applications with a high-proprensity of turning into a business with a payroll. Maps are divided into two time-intervals: all business applications and post Covid-19 lockdown measures in March 2020. Full information about the dataset is available <a href="https://www.census.gov/econ/bfs/index.html">here</a>.</p>
+    <hr class="solid">
+    <div class="wrapper">
+      <div class="one"><h2>Business Applications 2006 - 2020</h2></div>
+      <div class="two"><svg width="750" height="500" id="svg1"></svg></div>
+      <div class="three"><h2>Business Applications March - October 2020</h2></div>
+      <div class="four"><svg width="750" height="500" id="svg2"></svg></div>
+    </div>
+    <br>
+    <img src="scale.png" width="400" height="50">
+    <script type="text/javascript">
+
+// start color legend
+//Append a defs (for definition) element to your SVG
+
+      //Width and height
+      var w = 750;
+      var h = 500;
+
+      //Define map projection
+      var projection = d3.geoAlbersUsa()
+                   .translate([w/2, h/2])
+                   .scale([800]);
+
+      //Define path generator
+      var path = d3.geoPath()
+               .projection(projection);
+      
+      var color1 = d3.scaleSequential()
+                  .interpolator(d3.interpolateViridis);
+
+      var color2 = d3.scaleSequential()
+                  .interpolator(d3.interpolateViridis);
+
+      //Create SVG element
+      var svg1 = d3.select("#svg1")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+      var svg2 = d3.select("#svg2")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+      var allGroup = ['alltime','post320']
+
+      //Load in agriculture data
+      d3.csv("bfs_all_percapHBA_alltime.csv", function(data) {
+        //change the percap10k column from strings to numbers
+        data.forEach(function (d) { d.percap10k = +d.percap10k; });
+
+        //Set input domain for color scale
+        color1.domain([
+          d3.min(data, function(d) { return d.percap10k; }), 
+          d3.max(data, function(d) { return d.percap10k; })
+        ]);
+
+        //Load in GeoJSON data for viz 1
+        d3.json("us-states.json", function(json) {
+
+          //Merge the ag. data and GeoJSON
+          //Loop through once for each ag. data value
+          for (var i = 0; i < data.length; i++) {
+        
+            //Grab state name
+            var dataState = data[i].stateName;
+            
+            //Grab data value, and convert from string to float
+            var dataValue = parseFloat(data[i].percap10k);
+
+            //Grab bfs measure for filter
+            var bfsValue = data[i].period;
+            // console.log(periods)
+        
+            //Find the corresponding state inside the GeoJSON
+            for (var j = 0; j < json.features.length; j++) {
+            
+                var jsonState = json.features[j].properties.name;
+          
+                if (dataState == jsonState) {
+              
+                  //Copy the data value into the JSON
+                  json.features[j].properties.percap10k = dataValue;
+                  json.features[j].properties.period = bfsValue;
+
+                  console.log(json.features)
+                  
+                  //Stop looking through the JSON
+                  break;
+                
+              }
+            }   
+          }
+
+          //Bind data and create one path per GeoJSON feature
+        svg1.selectAll("path")
+             .data(json.features)
+             .enter()
+             .append("path")
+             .attr("d", path)
+             .style("fill", function(d) {
+                //Get data value
+                var value = d.properties.percap10k;
+                
+                if (value) {
+                  //If value exists…
+                  return color1(value);
+                } else {
+                  //If value is undefined…
+                  return "#ccc";
+                }
+             });
+      
+        });
+      
+      });
+// viz 2
+      d3.csv("bfs_all_percapHBA_320.csv", function(data) {
+        //change the percap10k column from strings to numbers
+        data.forEach(function (d) { d.percap10k = +d.percap10k; });
+
+
+        //Set input domain for color scale
+        color2.domain([
+          d3.min(data, function(d) { return d.percap10k; }), 
+          d3.max(data, function(d) { return d.percap10k; })
+        ]);
+
+        //Load in GeoJSON data for viz 2
+        d3.json("us-states.json", function(json) {
+
+          //Merge the ag. data and GeoJSON
+          //Loop through once for each ag. data value
+          for (var i = 0; i < data.length; i++) {
+        
+            //Grab state name
+            var dataState = data[i].stateName;
+            
+            //Grab data value, and convert from string to float
+            var dataValue = parseFloat(data[i].percap10k);
+
+            //Grab bfs measure for filter
+            var bfsValue = data[i].period;
+            // console.log(periods)
+        
+            //Find the corresponding state inside the GeoJSON
+            for (var j = 0; j < json.features.length; j++) {
+            
+                var jsonState = json.features[j].properties.name;
+          
+                if (dataState == jsonState) {
+              
+                  //Copy the data value into the JSON
+                  json.features[j].properties.percap10k = dataValue;
+                  json.features[j].properties.period = bfsValue;
+                  
+                  
+                  //Stop looking through the JSON
+                  break;
+                
+              }
+            }   
+          }
+
+          //Bind data and create one path per GeoJSON feature
+
+        svg2.selectAll("path")
+             .data(json.features)
+             .enter()
+             .append("path")
+             .attr("d", path)
+             .style("fill", function(d) {
+                //Get data value
+                var value = d.properties.percap10k;
+                
+                if (value) {
+                  //If value exists…
+                  return color2(value);
+                } else {
+                  //If value is undefined…
+                  return "#ccc";
+                }
+             });
+      
+        });
+      
+      });
+
+
+      
+    </script>
+  </body>
+</html>

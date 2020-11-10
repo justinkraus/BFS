@@ -1,0 +1,52 @@
+﻿State,stateName,id,period,bfsMeasure,percap10k
+AK,Alaska,2,alltime,HBA,586.5667867
+AL,Alabama,1,alltime,HBA,424.2548466
+AR,Arkansas,5,alltime,HBA,459.3406331
+AZ,Arizona,4,alltime,HBA,495.9802669
+CA,California,6,alltime,HBA,609.3835824
+CO,Colorado,8,alltime,HBA,719.2203289
+CT,Connecticut,9,alltime,HBA,431.7464485
+DC,District of Columbia,11,alltime,HBA,790.6493668
+DE,Delaware,10,alltime,HBA,1056.108051
+FL,Florida,12,alltime,HBA,1104.655486
+GA,Georgia,13,alltime,HBA,742.2328375
+HI,Hawaii,15,alltime,HBA,548.4252814
+IA,Iowa,19,alltime,HBA,379.3893638
+ID,Idaho,16,alltime,HBA,579.2178796
+IL,Illinois,17,alltime,HBA,671.2926264
+IN,Indiana,18,alltime,HBA,419.5199235
+KS,Kansas,20,alltime,HBA,452.165472
+KY,Kentucky,21,alltime,HBA,370.1031835
+LA,Louisiana,22,alltime,HBA,538.1180581
+MA,Massachusetts,25,alltime,HBA,493.1735249
+MD,Maryland,24,alltime,HBA,605.7879345
+ME,Maine,23,alltime,HBA,461.8319134
+MI,Michigan,26,alltime,HBA,508.3581351
+MN,Minnesota,27,alltime,HBA,458.9306536
+MO,Missouri,29,alltime,HBA,478.7999142
+MS,Mississippi,28,alltime,HBA,510.7271175
+MT,Montana,30,alltime,HBA,665.7135532
+NC,North Carolina,37,alltime,HBA,502.1317526
+ND,North Dakota,38,alltime,HBA,513.4752815
+NE,Nebraska,31,alltime,HBA,416.6132481
+NH,New Hampshire,33,alltime,HBA,431.2681151
+NJ,New Jersey,34,alltime,HBA,620.6464847
+NM,New Mexico,35,alltime,HBA,421.350525
+NV,Nevada,32,alltime,HBA,842.0352735
+NY,New York,36,alltime,HBA,810.4583012
+OH,Ohio,39,alltime,HBA,384.3067473
+OK,Oklahoma,40,alltime,HBA,499.1444213
+OR,Oregon,41,alltime,HBA,543.9172713
+PA,Pennsylvania,42,alltime,HBA,398.3365397
+RI,Rhode Island,44,alltime,HBA,470.6610872
+SC,South Carolina,45,alltime,HBA,443.8389858
+SD,South Dakota,46,alltime,HBA,484.1413471
+TN,Tennessee,47,alltime,HBA,428.4412727
+TX,Texas,48,alltime,HBA,500.7538829
+UT,Utah,49,alltime,HBA,671.9364383
+VA,Virginia,51,alltime,HBA,519.6286248
+VT,Vermont,50,alltime,HBA,533.6632537
+WA,Washington,53,alltime,HBA,492.2590508
+WI,Wisconsin,55,alltime,HBA,394.457026
+WV,West Virginia,54,alltime,HBA,332.2830103
+WY,Wyoming,56,alltime,HBA,1109.788358
