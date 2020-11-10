@@ -12,12 +12,13 @@
         font-family: 'Catamaran', sans-serif;
         margin: 1em auto 4em auto;
         position: relative;
-        width: 1500px;
+        width: 1200px;
         text-align: center;
         }  
         .wrapper{
           display: grid;
           align-items: center;
+          column-gap: 1.5em;
         }
         .one{
           grid-column: 1;
@@ -46,9 +47,9 @@
     <hr class="solid">
     <div class="wrapper">
       <div class="one"><h2>Business Applications 2006 - 2020</h2></div>
-      <div class="two"><svg width="750" height="500" id="svg1"></svg></div>
+      <div class="two"><svg width="600" height="400" id="svg1"></svg></div>
       <div class="three"><h2>Business Applications March - October 2020</h2></div>
-      <div class="four"><svg width="750" height="500" id="svg2"></svg></div>
+      <div class="four"><svg width="600" height="400" id="svg2"></svg></div>
     </div>
     <br>
     <img src="./scale.png" width="400" height="50">
@@ -58,8 +59,8 @@
 //Append a defs (for definition) element to your SVG
 
       //Width and height
-      var w = 750;
-      var h = 500;
+      var w = 600;
+      var h = 400;
 
       //Define map projection
       var projection = d3.geoAlbersUsa()
